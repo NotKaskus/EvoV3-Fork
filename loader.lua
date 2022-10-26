@@ -9158,10 +9158,6 @@ function ArrayToString(Array, Function)
     return Array
 end
 
-aimbotgroup:Set('Aimbot', 'Enabled', false)
-aimbotgroup:Set('Aimbot', 'Use_mousemoverel', false)
-aimbotgroup:Set('FovCircle', 'Enabled', false)
-
 --[[ GUI ]]--
 local combat = library:addcategory(({ content = 'Combat' }))
 local aimbottab = combat:addtab({ content = 'Aimbot' })
