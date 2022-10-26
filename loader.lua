@@ -9208,7 +9208,7 @@ aimbotfov:addslider({ content = "Radius", max = 800, default = 100, flag = "aimb
     aimbotgroup:Set('FovCircle', 'Radius', value)
 end })
 
-local aimassistother = aimassistcat:addtab({ content = "Other" })
+local aimassistother = combat:addtab({ content = "Other" })
 local autofiring = aimassistother:addsection({ content = "Auto Firing" })
 autofiring:addtoggle({ content = 'Enabled', default = false, flag = 'autofireenabled', callback = function(state)
     aimbotgroup:Set('TriggerBot', 'Enabled', state)
