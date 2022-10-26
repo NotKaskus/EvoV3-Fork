@@ -1,0 +1,23 @@
+{
+    "robloxLsp.diagnostics.globals": [
+        "evov3",
+        "inst",
+        "getconnections",
+        "isfile",
+        "isfolder",
+        "makefolder",
+        "readfile",
+        "writefile",
+        "forceupdate",
+        "writefile",
+        "getgenv",
+        "getcustomasset",
+        "newcclosure",
+        "hookfunction",
+        "getrenv"
+    ],
+    "robloxLsp.diagnostics.disable": [
+        "undefined-global",
+        "duplicate-index"
+    ]
+}
