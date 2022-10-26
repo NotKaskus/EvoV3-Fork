@@ -263,7 +263,7 @@ ui.main.loader.Visible = true
 
 local tweenservice = game:GetService("TweenService")
 
-local setup = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Project-Evolution/Archive/main/V3/modules/setup.lua", true))()
+local setup = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/NotKaskus/EvoV3-Fork/main/modules/setup.lua", true))()
 local changelog, steps = setup:getloginfo()
 local incr = 0
 
@@ -1182,7 +1182,7 @@ local function serverhop()
         log[game.JobId] = tick()
         writefile("Evo V3/Data/Votekick Logs/Phantom Forces.json", client.services.httpservice:JSONEncode(log))
         if library.flags.executeonhop then
-            queueonteleport("repeat task.wait() until game:GetService(\"ContentProvider\").RequestQueueSize == 0\nloadstring(game:HttpGetAsync(\"https://raw.githubusercontent.com/Project-Evolution/Archive/main/V3/loader.lua\", true))()")
+            queueonteleport("repeat task.wait() until game:GetService(\"ContentProvider\").RequestQueueSize == 0\nloadstring(game:HttpGetAsync(\"https://raw.githubusercontent.com/NotKaskus/EvoV3-Fork/main/loader.lua\", true))()")
         end
         client.services.teleportservice:TeleportToPlaceInstance(game.PlaceId, valid[math.random(1, #valid)])
     else

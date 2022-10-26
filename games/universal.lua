@@ -1,6 +1,6 @@
 --[[ Setup ]]--
 
-local setup = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Project-Evolution/Archive/main/V3/modules/setup.lua", true))()
+local setup = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/NotKaskus/EvoV3-Fork/main/modules/setup.lua", true))()
 local changelog = setup:getloginfo()
 setup:startchecks(changelog)
 
