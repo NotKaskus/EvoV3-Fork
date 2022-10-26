@@ -10,8 +10,8 @@ local LPH_JIT_ULTRA = function(...) return ... end
 --[[ Variables ]]--
 
 local library = evov3.imports:fetchmodule("library").new({ content = "Universal", version = changelog.version .. " Premium" })
+local aimbotgroup = evov3.imports:fetchmodule("aimbot")
 evov3.imports:fetchmodule("esp")
-evov3.imports:fetchmodule("aimbot")
 
 local maids = {
     character = evov3.imports:fetchsystem("maid"),
@@ -154,12 +154,87 @@ else
     end
 end
 
+function GetBodyParts(Character)
+    local Partss = Character:GetChildren()
+
+    for i = #Partss, 1, -1 do
+        if (not Partss[i]:IsA("BasePart")) then
+            table.remove(Partss, i)
+        end
+    end
+
+    return Partss
+end
+
+function ArrayToString(Array, Function)
+    Function = Function or tostring
+    for i, v in pairs(Array) do
+        Array[i] = Function(v)
+    end
+    return Array
+end
+
+aimbotgroup:Set('Aimbot', 'Enabled', false)
+aimbotgroup:Set('Aimbot', 'Use_mousemoverel', false)
+aimbotgroup:Set('FovCircle', 'Enabled', false)
+
 --[[ GUI ]]--
 local combat = library:addcategory(({ content = 'Combat' }))
 local aimbottab = combat:addtab({ content = 'Aimbot' })
 
 local aimbotmain = aimbottab:addsection({ content = 'Main' })
+aimbotmain:addtoggle({ content = 'Enabled', default = false, flag = 'aimbotenabled', callback = function(state)
+    aimbotgroup:Set('Aimbot', 'Enabled', state)
+end })
+aimbotmain:addtoggle({ content = "Wall Check", default = false, flag = "aimbotwallcheck", callback = function(state)
+    aimbotgroup:Set('Other', 'VisibleCheck', state)
+end })
+aimbotmain:addtoggle({ content = 'Legit Aim', default = false, flag = 'aimbotlegitaim', callback = function(state)
+    aimbotgroup:Set('Aimbot', 'Use_mousemoverel', state)
+end })
+aimbotmain:adddropdown({ content = "Aim Part", flag = "aimbotpart", default = "Head", items = ArrayToString(GetBodyParts(players.LocalPlayer.Character)), callback = function(item) 
+    aimbotgroup:Set('Aimbot', 'TargetPart', item)
+end })
+aimbotmain:addslider({ content = "Smoothness", min = 1, max = 250, default = 100, flag = "smoothness", callback = function(value)
+    aimbotgroup:Set('Aimbot', 'Strength', value)
+end })
 
+local precision = aimbottab:addsection({ content = "Precision", right = true })
+precision:addtoggle({ content = "Movement Prediction", default = false, flag = "predictmovement", callback = function(state)
+    aimbotgroup:Set('Prediction', 'Enabled', state)
+end })
+precision:addslider({ content = "Max Range", max = 1500, default = 1500, flag = "aimbotrange", callback = function(value)
+    aimbotgroup:Set('Other', 'MaximumDistance', value)
+end })
+
+local aimbotfov = aimbottab:addsection({ content = "FOV", right = true })
+aimbotfov:addtoggle({ content = 'Enabled', default = false, flag = 'aimbotfovenabled', callback = function(state)
+    aimbotgroup:Set('FovCircle', 'Enabled', state)
+end })
+aimbotfov:addtoggle({ content = "Dynamic", default = false, flag = "aimbotfovdynamic", callback = function(state)
+    aimbotgroup:Set('FovCircle', 'Dynamic', state)
+end })
+aimbotfov:addpicker({ content = "Colour", flag = "aimbotfovcolour", default = Color3.fromRGB(230, 33, 237), callback = function(colour)
+    aimbotgroup:Set('FovCircle', 'Color', colour)
+end })
+aimbotfov:addslider({ content = "Transparency", default = 1, max = 1, float = 0.01, flag = "aimbotfovtrans", callback = function(value)
+    aimbotgroup:Set('FovCircle', 'Transparency', 1 - value)
+end })
+aimbotfov:addslider({ content = "Radius", max = 800, default = 100, flag = "aimbotfovradius", callback = function(value)
+    aimbotgroup:Set('FovCircle', 'Radius', value)
+end })
+
+local aimassistother = aimassistcat:addtab({ content = "Other" })
+local autofiring = aimassistother:addsection({ content = "Auto Firing" })
+aimbotfov:addtoggle({ content = 'Enabled', default = false, flag = 'autofireenabled', callback = function(state)
+    aimbotgroup:Set('TriggerBot', 'Enabled', state)
+end })
+aimbotfov:addslider({ content = "Delay (milliseconds)", max = 1000, default = 60, flag = "autofiredelay", callback = function(value)
+    aimbotgroup:Set('TriggerBot', 'Delay', value)
+end })
+aimbotfov:addslider({ content = "CPS", max = 50, min = 0, default = 10, flag = "autofirecps", callback = function(value)
+    aimbotgroup:Set('TriggerBot', 'ClicksPerSecond', value)
+end })
 
 local visuals = library:addcategory({ content = "Visuals" })
 local esptab = visuals:addtab({ content = "ESP" })
